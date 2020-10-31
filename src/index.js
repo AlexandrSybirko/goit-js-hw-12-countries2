@@ -7,15 +7,14 @@ const refs = {
 }
 
 
-fetch('https://restcountries.eu/rest/v2/name/ukraine').then(response => {
+fetch('https://restcountries.eu/rest/v2/name/italy').then(response => {
    
     return response.json();
 }).then(country => {
     console.log(country);
-    const markup = countryCardTpl(country);
+    const markup = countryCardTpl(country[0]);
     console.log(markup);
-    refs.cardContainer.innerHTML(markup)
-   
+    refs.cardContainer.innerHTML = markup
 }).catch(error => { console.log(error); });
 
 
