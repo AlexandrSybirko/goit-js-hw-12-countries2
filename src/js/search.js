@@ -23,10 +23,16 @@ refs.searchInput.addEventListener(
 
 
 function onSearch() {
+  searchCountry = refs.searchInput.value;
+  
+ 
+  if (searchCountry) {
+     API.fetchCountries(searchCountry).then(countryCheck).catch(onFetchError);
+  }
 
-    searchCountry = refs.searchInput.value;
-    API.fetchCountries(searchCountry).then(countryCheck).catch(onFetchError);
-
+  if (!searchCountry) {
+    clearMarkup();
+  }
 }
 
 function onFetchError(error) {
@@ -37,14 +43,19 @@ function onFetchError(error) {
 
 function countryCheck(country) {
   if (country.length > 10) {
+     clearMarkup();
     tooMany();
+     
     
   } else if (country.length <= 10 && country.length > 1) {
-        rendercountryCard(countryListTpl, country);
+     clearMarkup();
+    rendercountryCard(countryListTpl, country);
+   
 
   } else if (country.length === 1) {
-    
+     clearMarkup();
     rendercountryCard(countryCardTpl, country[0]);
+   
   } 
 }
 
@@ -63,6 +74,10 @@ function tooMany() {
     text: 'Too many matches found. Please enter a more specific query!',
     
   });
+}
+
+function clearMarkup() {
+  refs.cardContainer.innerHTML = '';
 }
 
 
